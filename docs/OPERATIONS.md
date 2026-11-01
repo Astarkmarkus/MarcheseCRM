@@ -8,7 +8,7 @@ Companies have many contacts and opportunities. Projects reference companies and
 
 ## First admin
 
-There are no initial business accounts. An approved user must first be invited through Supabase Authentication. After they accept, a trusted administrator inserts a profiles row with their auth user UUID, display_name, role='admin' and active=true. Never derive roles from user_metadata. Do not automatically make the first person who signs up an admin. Provision ONYX45 technical access only after Marchese explicitly approves its identity and scope.
+The two explicitly approved administrator accounts are provisioned and active. The temporary server-side setup endpoint is disabled and no credentials are stored in source. For future accounts, an approved user must first be invited through Supabase Authentication. After they accept, a trusted administrator inserts a profiles row with their auth user UUID, display_name, role='admin' and active=true. Never derive roles from user_metadata. Do not automatically make the first person who signs up an admin. Provision ONYX45 technical access only after Marchese explicitly approves its identity and scope.
 
 Disable public signups in Supabase Auth for invite-only use. Set Site URL and approved redirect URLs to the actual deployed origins. Configure email delivery before enabling invitations. Do not expose the service-role key in the client. Team invitation delivery is intentionally not implemented in the browser.
 

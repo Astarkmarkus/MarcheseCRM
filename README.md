@@ -21,3 +21,7 @@ Implemented: responsive shell and dashboard; invite-account password sign-in; pr
 Pending: first administrator account, invitation service, complete record editing/deletion workflows, day/week/month calendar UI, candidate document upload, retention/deletion workflow, advanced reports and paginated full exports. This is an initial foundation, not a completed production CRM.
 
 No business sample data is shipped. No paid third-party services or automatic external emails are enabled.
+
+## Language and access
+
+Swedish is the default. The header language selector supports Swedish and English and remembers the browser preference. System labels and stages are translated without changing database keys or user-entered content. Public visitors can open the login page; business records remain protected by Supabase Auth and RLS. Two explicitly approved administrator accounts have been provisioned; passwords are never stored in the application or repository.
