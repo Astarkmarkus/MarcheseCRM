@@ -2,7 +2,7 @@
 
 ## Architecture
 
-`src/db.ts`: dedicated Supabase client and shared record types. `src/permissions.ts`: default permissions and explicit override handling. `src/main.tsx`: initial shell, auth, modules, forms and dashboard. `src/style.css`: responsive Marchese design tokens and components. Split module screens into separate components as workflows expand.
+`src/db.ts`: dedicated Supabase client and shared record types. `src/permissions.ts`: default permissions and explicit override handling. `src/main.tsx`: shell, auth, modules, forms and dashboard. `src/components/Calendar.tsx`: shared day/week/month calendar and meeting actions. `src/components/InviteTeam.tsx`: invitation administration. `src/components/PhoneEditor.tsx`: phone updates. `src/style.css`: responsive Marchese design tokens and components. Split module screens into separate components as workflows expand.
 
 Companies have many contacts and opportunities. Projects reference companies and optionally won opportunities. Candidates are independent profiles; candidate_matches links them to many projects without duplication. Meetings have real start/end intervals. Tasks have owners and due dates. Team membership is independent of primary role. Configurable pipeline stages preserve stable identifiers; archive stages rather than deleting stages referenced by history.
 
@@ -10,7 +10,7 @@ Companies have many contacts and opportunities. Projects reference companies and
 
 The two explicitly approved administrator accounts are provisioned and active. The temporary server-side setup endpoint is disabled and no credentials are stored in source. For future accounts, an approved user must first be invited through Supabase Authentication. After they accept, a trusted administrator inserts a profiles row with their auth user UUID, display_name, role='admin' and active=true. Never derive roles from user_metadata. Do not automatically make the first person who signs up an admin. Provision ONYX45 technical access only after Marchese explicitly approves its identity and scope.
 
-Disable public signups in Supabase Auth for invite-only use. Set Site URL and approved redirect URLs to the actual deployed origins. Configure email delivery before enabling invitations. Do not expose the service-role key in the client. Team invitation delivery is intentionally not implemented in the browser.
+Disable public signups in Supabase Auth for invite-only use. Set Site URL and approved redirect URLs to the actual deployed origins. Configure email delivery before enabling invitations. Do not expose the service-role key in the client. Team invitation delivery runs through the protected server-side Edge Function; see EMAIL_INVITATIONS.md for SMTP and redirect requirements.
 
 ## Permissions
 
@@ -18,7 +18,7 @@ Primary roles: admin, appointment_setter, sales, talent_broker. Explicit per-mod
 
 Private security-definer lookup functions are narrowly used to avoid RLS recursion. Their search_path is empty, EXECUTE is revoked from PUBLIC, and they check auth.uid(). All public tables have RLS. No anon business-table grants. Audits store actor, entity, operation and changed column names, never candidate notes or document bodies. Candidate data requires its separate module permission; company access never grants candidate access.
 
-The initial UI edits module overrides. Primary role changes, deactivation and invitations currently require trusted administration through Supabase; complete these UI workflows before wider rollout. Keep at least one Marchese-controlled admin. ONYX45 access can be revoked independently by deactivating its profile, without affecting ownership of data or code.
+The UI edits module overrides and sends new team invitations. Primary role changes for existing accounts and deactivation currently require trusted administration through Supabase; complete these UI workflows before wider rollout. Keep at least one Marchese-controlled admin. ONYX45 access can be revoked independently by deactivating its profile, without affecting ownership of data or code.
 
 ## Validation
 
